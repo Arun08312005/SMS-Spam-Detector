@@ -11,7 +11,7 @@ app.secret_key = secrets.token_hex(16)
 
 # MongoDB Configuration
 client = MongoClient(
-    'mongodb+srv://arun:arunarun@cluster0.nbnexvr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+    'Paste Your mongodb url',
     tlsAllowInvalidCertificates=True  # Disables SSL certificate verification
 )
 db = client['spamshield']
