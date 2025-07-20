@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Batch Check - Spam Detector{% endblock %}
+
+{% block extra_css %}
+<style>
+    .file-upload {
+        border: 2px dashed #cbd5e0;
+        transition: all 0.3s ease;
+    }
+    .file-upload:hover {
+        border-color: #4299e1;
+    }
+    .file-upload.dragover {
+        border-color: #4299e1;
+        background-color: #ebf8ff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold text-center mb-8">Batch SMS Check</h1>
+    
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <form action="{{ url_for('batch') }}" method="POST" enctype="multipart/form-data" id="batch-form">
+            <div class="mb-6">
+                <label class="block text-gray-700 font-medium mb-2">Upload your file:</label>
+                <div class="file-upload rounded-lg p-8 text-center cursor-pointer" id="file-upload-area">
+                    <input type="file" name="file" id="file-input" class="hidden" accept=".csv,.xlsx,.xls">
+                    <div class="text-blue-500 text-5xl mb-4">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <p class="text-gray-600 mb-2">Drag & drop your file here or click to browse</p>
+                    <p class="text-sm text-gray-500">Supports CSV and Excel files</p>
+                    <p id="file-name" class="mt-4 font-medium text-blue-600 hidden"></p>
+                </div>
+            </div>
+            
+            <div class="mb-6 bg-gray-50 p-4 rounded-lg">
+                <h3 class="font-bold mb-2">File Requirements:</h3>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>Must contain a column named "message"</li>
+                    <li>Maximum file size: 5MB</li>
+                    <li>Maximum 1000 messages per file</li>
+                    <li>Supported formats: CSV, XLSX, XLS</li>
+                </ul>
+            </div>
+            
+            <button type="submit" id="submit-btn" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled>
+                <i class="fas fa-spinner fa-spin hidden" id="spinner"></i>
+                <span id="button-text">Process File</span>
+            </button>
+        </form>
+    </div>
+</section>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('file-input');
+    const fileUploadArea = document.getElementById('file-upload-area');
+    const fileName = document.getElementById('file-name');
+    const submitBtn = document.getElementById('submit-btn');
+    const buttonText = document.getElementById('button-text');
+    const spinner = document.getElementById('spinner');
+    
+    // Handle drag and drop
+    fileUploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('dragover');
+    });
+    
+    fileUploadArea.addEventListener('dragleave', function() {
+        this.classList.remove('dragover');
+    });
+    
+    fileUploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        
+        if (e.dataTransfer.files.length) {
+            fileInput.files = e.dataTransfer.files;
+            handleFileSelect();
+        }
+    });
+    
+    // Handle file selection
+    fileUploadArea.addEventListener('click', function() {
+        fileInput.click();
+    });
+    
+    fileInput.addEventListener('change', handleFileSelect);
+    
+    function handleFileSelect() {
+        if (fileInput.files.length) {
+            const file = fileInput.files[0];
+            fileName.textContent = file.name;
+            fileName.classList.remove('hidden');
+            submitBtn.disabled = false;
+        }
+    }
+    
+    // Form submission
+    document.getElementById('batch-form').addEventListener('submit', function() {
+        buttonText.classList.add('hidden');
+        spinner.classList.remove('hidden');
+        submitBtn.disabled = true;
+    });
+});
+</script>
+{% endblock %}
+{% endblock %}

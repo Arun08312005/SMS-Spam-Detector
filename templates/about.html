@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Spam Detector{% endblock %}
+
+{% block content %}
+<section class="mb-12">
+    <h1 class="text-3xl font-bold text-center mb-8">About SMS Spam Detector</h1>
+    
+    <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+        <h2 class="text-2xl font-bold mb-4">Our Mission</h2>
+        <p class="text-gray-700 mb-4">
+            At SMS Spam Detector, we're committed to protecting users from unwanted SMS spam messages. 
+            Our advanced machine learning system analyzes message content with 98% accuracy, 
+            helping you identify potential spam before it becomes a problem.
+        </p>
+        <p class="text-gray-700">
+            Founded in 2025, SMS Spam Detector began as a university project to combat the growing problem 
+            of SMS spam. Today, we serve thousands of users worldwide with our detection technology.
+        </p>
+    </div>
+
+    <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+        <h2 class="text-2xl font-bold mb-4">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="border-l-4 border-blue-500 pl-4">
+                <h3 class="text-xl font-semibold mb-2">1. Message Analysis</h3>
+                <p class="text-gray-600">
+                    Our system examines message content, keywords, and patterns using natural language processing.
+                </p>
+            </div>
+            <div class="border-l-4 border-blue-500 pl-4">
+                <h3 class="text-xl font-semibold mb-2">2. Machine Learning</h3>
+                <p class="text-gray-600">
+                    Advanced algorithms compare the message against thousands of known spam patterns.
+                </p>
+            </div>
+            <div class="border-l-4 border-blue-500 pl-4">
+                <h3 class="text-xl font-semibold mb-2">3. Instant Results</h3>
+                <p class="text-gray-600">
+                    Get a clear spam/ham classification with confidence percentage in seconds.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-6">Meet the Team</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="text-center">
+                <div class="bg-gray-200 rounded-full w-32 h-32 mx-auto mb-4 overflow-hidden">
+                    <!-- Placeholder for team member image -->
+                    <div class="w-full h-full bg-blue-500 flex items-center justify-center text-white text-4xl">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold">Arun</h3>
+                <p class="text-blue-600">Lead Data Scientist</p>
+            </div>
+            <div class="text-center">
+                <div class="bg-gray-200 rounded-full w-32 h-32 mx-auto mb-4 overflow-hidden">
+                    <div class="w-full h-full bg-blue-500 flex items-center justify-center text-white text-4xl">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold">Sakthi</h3>
+                <p class="text-blue-600">Frontend Developer</p>
+            </div>
+            <div class="text-center">
+                <div class="bg-gray-200 rounded-full w-32 h-32 mx-auto mb-4 overflow-hidden">
+                    <div class="w-full h-full bg-blue-500 flex items-center justify-center text-white text-4xl">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold">Anbu</h3>
+                <p class="text-blue-600">Backend Engineer</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

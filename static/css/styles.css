@@ -1,0 +1,60 @@
+/* Custom animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Table styles */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background-color: #f8fafc;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+    .hero-buttons {
+        flex-direction: column;
+    }
+    
+    .hero-buttons a {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-buttons a:last-child {
+        margin-bottom: 0;
+    }
+}

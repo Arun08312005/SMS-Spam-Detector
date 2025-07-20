@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Results - Spam Detector{% endblock %}
+
+{% block extra_css %}
+<style>
+    .prediction-badge {
+        display: inline-block;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+    }
+    .spam-badge {
+        background-color: #ef4444;
+        color: white;
+    }
+    .ham-badge {
+        background-color: #10b981;
+        color: white;
+    }
+    .confidence-meter {
+        height: 0.5rem;
+        background-color: #e5e7eb;
+        border-radius: 9999px;
+        overflow: hidden;
+    }
+    .confidence-meter-fill {
+        height: 100%;
+        border-radius: 9999px;
+    }
+    .confidence-meter-fill.spam {
+        background-color: #ef4444;
+    }
+    .confidence-meter-fill.ham {
+        background-color: #10b981;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="max-w-5xl mx-auto">
+    <h1 class="text-3xl font-bold text-center mb-8">Detection Results</h1>
+    
+    {% if manual_result %}
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h2 class="text-xl font-bold mb-4">Manual Check Result</h2>
+        
+        <div class="mb-4 p-4 bg-gray-50 rounded-lg">
+            <p class="font-medium">Original Message:</p>
+            <p class="mt-2 whitespace-pre-wrap">{{ manual_result.message }}</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div>
+        <p class="font-medium mb-2">Prediction:</p>
+        <span class="inline-block px-3 py-1 rounded-full text-white 
+                  {{ 'bg-red-500' if manual_result.prediction == 'spam' else 'bg-green-500' }}">
+            {{ manual_result.prediction|upper }}
+        </span>
+    </div>
+    <div>
+        <p class="font-medium mb-2">Confidence:</p>
+        <div class="flex items-center">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+                <div class="h-2.5 rounded-full 
+           {% if manual_result.prediction == 'spam' %}bg-red-500{% else %}bg-green-500{% endif %}" 
+     style="width: {{ "manual_result.confidence * 100" }}%">
+</div>
+            </div>
+            <span>{{ "%.2f"|format(manual_result.confidence * 100) }}%</span>
+        </div>
+    </div>
+</div>
+        
+        <div class="p-4 rounded-lg {{ 'bg-red-100 text-red-800' if manual_result.prediction == 'spam' else 'bg-green-100 text-green-800' }}">
+            <i class="fas {{ 'fa-exclamation-triangle' if manual_result.prediction == 'spam' else 'fa-check-circle' }} mr-2"></i>
+            {{ "This message is likely spam. Be cautious!" if manual_result.prediction == 'spam' 
+               else "This message appears to be legitimate." }}
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if batch_results %}
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold mb-4">Batch Check Results</h2>
+        <p class="mb-4">{{ batch_results|length }} messages processed</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="bg-green-50 p-4 rounded-lg">
+                <p class="text-green-800 font-bold">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    {{ batch_results|selectattr('prediction', 'equalto', 'ham')|list|length }} Legitimate
+                </p>
+            </div>
+            <div class="bg-red-50 p-4 rounded-lg">
+                <p class="text-red-800 font-bold">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    {{ batch_results|selectattr('prediction', 'equalto', 'spam')|list|length }} Spam
+                </p>
+            </div>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="py-3 px-4 text-left">Message</th>
+                        <th class="py-3 px-4 text-left">Prediction</th>
+                        <th class="py-3 px-4 text-left">Confidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in batch_results %}
+                    <tr class="border-t border-gray-200 {{ 'bg-red-50' if result.prediction == 'spam' else 'bg-green-50' }}">
+                        <td class="py-3 px-4">{{ result.message[:50] }}{% if result.message|length > 50 %}...{% endif %}</td>
+                        <td class="py-3 px-4">
+                            <span class="prediction-badge {{ 'spam-badge' if result.prediction == 'spam' else 'ham-badge' }}">
+                                {{ result.prediction|upper }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">{{ "%.2f"|format(result.confidence * 100) }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="mt-8 text-center">
+        <a href="{{ url_for('manual') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg mr-4">
+            <i class="fas fa-keyboard mr-2"></i> Check Another Message
+        </a>
+        <a href="{{ url_for('batch') }}" class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg">
+            <i class="fas fa-file-upload mr-2"></i> Process Another File
+        </a>
+    </div>
+</section>
+{% endblock %}

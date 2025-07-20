@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Spam Detector{% endblock %}
+
+{% block content %}
+<section class="hero bg-blue-50 rounded-lg p-8 mb-8">
+    <div class="container mx-auto text-center">
+        <h1 class="text-4xl font-bold text-blue-800 mb-4">SMS Spam Detector</h1>
+        <p class="text-xl text-gray-700 mb-6">Protect yourself from unwanted spam messages with our advanced detection system</p>
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+            <a href="{{ url_for('manual') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition">
+                <i class="fas fa-keyboard mr-2"></i> Manual Check
+            </a>
+            <a href="{{ url_for('batch') }}" class="bg-white hover:bg-gray-100 text-blue-600 font-bold py-3 px-6 border border-blue-600 rounded-lg transition">
+                <i class="fas fa-file-upload mr-2"></i> Batch Check
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="features mb-12">
+    <h2 class="text-2xl font-bold text-center mb-8">Why Choose SpamShield?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="text-blue-600 text-3xl mb-4">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Real-Time Detection</h3>
+            <p class="text-gray-600">Instant analysis of incoming messages with our lightning-fast AI engine.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="text-blue-600 text-3xl mb-4">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">98% Accuracy</h3>
+            <p class="text-gray-600">Industry-leading precision in spam identification.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="text-blue-600 text-3xl mb-4">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Privacy Focused</h3>
+            <p class="text-gray-600">Your messages never leave your device.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
